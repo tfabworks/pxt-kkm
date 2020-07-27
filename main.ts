@@ -168,29 +168,16 @@ namespace PXT_KKM {
         }
         return false;
     }
-
-    let is_acc_first_time: boolean = true;
-    let prev_accelaration: number;
-    let acceleration: number;
-    const MOVING_THRESHOLD: number = 25;
-
+    
     /**
      * micro:bit本体が揺り動かされた場合に真を返します。
      */
     //% blockId=is_move
     //% block="ゆれた"
     //% weight=40
-    export function is_move(): boolean {
-        basic.pause(150);
-        if (is_acc_first_time) {
-            acceleration = input.acceleration(Dimension.Strength)
-            is_acc_first_time = false;
-            return false;
-        }
-        prev_accelaration = acceleration;
-        acceleration = input.acceleration(Dimension.Strength);
-
-        if (Math.abs((acceleration - prev_accelaration)) > MOVING_THRESHOLD) {
+    export function is_move() : boolean {
+        let current_acc = input.acceleration(Dimension.Strength)
+        if ( current_acc < 750 || 1650 < current_acc ) {
             return true;
         }
         return false;
